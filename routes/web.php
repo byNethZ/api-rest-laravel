@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Charging clases
+use App\Http\Middleware\ApiAuthMiddleware;
+
 //Rutas de prueba
 Route::get('/', function () {
     return view('welcome');
@@ -43,9 +46,18 @@ Route::get('/test', [PruebasController::class, 'testOrm']);
 //Rutas del API
 
 //rutas de prueba de la API
-Route::get('/user/pruebas', [UserController::class, 'pruebas']);
-Route::get('/post/pruebas', [PostController::class, 'pruebas']);
-Route::get('/category/pruebas', [CategoryController::class, 'pruebas']);
+//Route::get('/user/pruebas', [UserController::class, 'pruebas']);
+//Route::get('/post/pruebas', [PostController::class, 'pruebas']);
+//Route::get('/category/pruebas', [CategoryController::class, 'pruebas']);
 
 //Rutas oficiales de UserController
-Route::post('user/register', [UserController::class, 'register']);
+Route::post('/api/register', [UserController::class, 'register']);
+Route::post('/api/login', [UserController::class, 'login']);
+Route::put('/api/update', [UserController::class, 'update']);
+Route::post('/api/upload' ,[UserController::class, 'upload'])->middleware(ApiAuthMiddleware::class);
+Route::get('/api/user/avatar/{filename}' ,[UserController::class, 'getImage']);
+Route::get('/api/user/detail/{id}' ,[UserController::class, 'details']);
+
+//Rutas CategoryController
+Route::resource('/api/category', CategoryController::class);
+
