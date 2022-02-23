@@ -10,6 +10,7 @@ class Post extends Model
     use HasFactory;
 
     protected $table = 'posts';
+    
 
     //Many to One Relation
     public function user()
